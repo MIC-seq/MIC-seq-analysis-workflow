@@ -17,7 +17,7 @@ kraken2 --db /public2/labmember/qianqh/sc_microbio/kraken2_db_uhgg_v2.0.1 --thre
 awk -F "\t" '($4>=60){print $0}' ${sample}.output > ${sample}.filter.output
 bracken -d /public2/labmember/qianqh/sc_microbio/kraken2_db_uhgg_v2.0.1 -t 32 -i ${sample}.report -o ${sample}.bracken -w ${sample}.bracken.report -r 100 -l S
 python /public2/labmember/qianqh/sc_microbio/scripts/kreport2mpa.py -r ${sample}.bracken.report -o ${sample}.bracken.report.mpa
-perl /public2/labmember/qianqh/sc_microbio/scripts/go_perl_newx.TXT ${sample}.bracken.report ${sample}.bracken.report.mpa ${sample}.bracken.report.mpa.newx
+perl /public2/labmember/qianqh/sc_microbio/scripts/go_perl_newx.pl ${sample}.bracken.report ${sample}.bracken.report.mpa ${sample}.bracken.report.mpa.newx
 python barcode_count.py -ko ${sample}.filter.output -kr ${sample}.bracken.report.mpa.newx -p ${sample}
 ##genus level annotation
 awk -F "\t" '{print $1}' ${sample}.barcode_count.txt > bc_tmp.txt

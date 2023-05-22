@@ -11,9 +11,9 @@ library(tidyverse)
 ###Single-cell transcriptional analysis for host-phage relationships
 cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, min_features=15,
  sp_rate_threshold = 0.03, pc.num=1:30, resolution_num = 0.5, if_nr = FALSE) {
-  ##Seurat对象创建
+  ##Create Seurat  object
   sample <- CreateSeuratObject(counts = input_data, project = "A197",min.cells = min_cells, min.features = min_features)
-  ##物种信息导入
+  ##Combine MIC-anno information 
   BC <- colnames(sample)
   BC<-as.data.frame(BC)
   colnames(bacteria_info) <- c("BC","index")
@@ -21,7 +21,7 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
   sample@meta.data$genus_info <- BC_info[,2]
   genus_num_data = table(sample@meta.data$genus_info)
 
-  ##去除极低丰度菌(<3%)
+  ##filter rare taxon bacteria(default <3%)
   num_threshold = dim(sample)[2] * sp_rate_threshold
   for(i in 1:length(genus_num_data)){
     if(genus_num_data[[i]]<num_threshold){
@@ -30,7 +30,7 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
     }
   }
 
-  ##样本基因UMI小提琴图
+  ##Violin plot og sample UMI and gene number 
   p1<-VlnPlot(sample, features = "nFeature_RNA", col="green",pt.size = 0)+
     geom_boxplot(width=.3, col="black", fill="white")+
     NoLegend()
@@ -52,7 +52,7 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
         units = "in",
         dpi=500)
 
-  ##降维聚类分析
+  ##clustering and non-linear dimensional reduction
   sample <- NormalizeData(sample, normalization.method = "LogNormalize", scale.factor = 10000)
   sample <- FindVariableFeatures(sample, selection.method = "vst", nfeatures = 2000)
   sample <- ScaleData(sample,features = VariableFeatures(sample))
@@ -61,7 +61,7 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
   sample <- FindClusters(sample, resolution = resolution_num)
   sample <- RunUMAP(sample, dims = pc.num)
 
-  ##提取UMAP聚类数据信息
+  #figure 
   umap = sample@reductions$umap@cell.embeddings %>%  
   as.data.frame() %>% 
   cbind(seurat_clusters = sample@meta.data$seurat_clusters) %>% 
@@ -104,22 +104,21 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
             scale_color_manual(values = cell_type_cols) +
             ggtitle("genus_info") +
             labs(x = "UMAP_1", y = "UMAP_2") +
-            theme(plot.title = element_text(hjust = 0.5), #标题居中
-            panel.grid.major = element_blank(), #主网格线
-            panel.grid.minor = element_blank(), #次网格线
-            panel.border = element_blank(), #边框
-            #axis.title = element_blank(),  #轴标题
-            axis.text = element_blank(), # 坐标刻度
+            theme(plot.title = element_text(hjust = 0.5), 
+            panel.grid.major = element_blank(), 
+            panel.grid.minor = element_blank(), 
+            panel.border = element_blank(), 
+            #axis.title = element_blank(),  
+            axis.text = element_blank(), 
             text = element_text(size = 20),
             axis.ticks = element_blank(),
-            panel.background = element_rect(fill = 'white'), #背景色
+            panel.background = element_rect(fill = 'white'), 
             plot.background=element_rect(fill="white")) +
             theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid")) +
             geom_label_repel(aes(label=genus_info), fontface="bold",data = genus_info_med,
             point.padding=unit(0.5, "lines")) +
             NoLegend()
 
-  ##物种信息与UMAP聚类图整合展示
   if(if_nr == TRUE){
     filename2 = paste("test_nr_",min_cells,"_",min_features,"_",resolution_num,".pdf", sep = "")
   }else{
@@ -135,7 +134,6 @@ cluster_pipeline <- function(input_data=NA, bacteria_info = NA, min_cells=30, mi
   return(sample)
 }
 sample <- cluster_pipeline(input_data = VC_nonrna_data_A197, bacteria_info = genus_info_A197, min_cells = 15, min_features = 15)
-
 
 ###Filter contaminated microbes
 sample_fig <- subset(sample, seurat_clusters != 0 & nFeature_RNA <100)
@@ -192,21 +190,20 @@ redraw <- function(sample = sample_fig, pc.num = 1:30, resolution_num = 0.5){
                   theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid")) 
                   
 
-
   plot2 <- ggplot(umap,aes(x= UMAP_1 , y = UMAP_2 ,color = genus_info)) + 
             geom_point(size = 1 , alpha =1 ) + 
             scale_color_manual(values = cell_type_cols) +
             ggtitle("genus_info") +
             labs(x = "UMAP_1", y = "UMAP_2") +
-            theme(plot.title = element_text(hjust = 0.5), #标题居中
-            panel.grid.major = element_blank(), #主网格线
-            panel.grid.minor = element_blank(), #次网格线
-            panel.border = element_blank(), #边框
-            #axis.title = element_blank(),  #轴标题
-            axis.text = element_blank(), # 坐标刻度
+            theme(plot.title = element_text(hjust = 0.5), 
+            panel.grid.major = element_blank(), 
+            panel.grid.minor = element_blank(), 
+            panel.border = element_blank(), 
+            #axis.title = element_blank(),  
+            axis.text = element_blank(), 
             text = element_text(size = 25),
             axis.ticks = element_blank(),
-            panel.background = element_rect(fill = 'white'), #背景色
+            panel.background = element_rect(fill = 'white'), 
             plot.background=element_rect(fill="white")) +
             theme(panel.border = element_rect(fill=NA,color="black", size=1, linetype="solid")) +
             geom_label_repel(aes(label=genus_info),data = genus_info_med, direction = "both",
