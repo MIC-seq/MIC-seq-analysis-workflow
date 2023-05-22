@@ -1,0 +1,9 @@
+CAG-81
+Clostridium_Q
+Dorea_A
+Faecalibacterium
+Fusicatenibacter
+Lachnospira
+Phascolarctobacterium_A
+Prevotella
+Roseburia
