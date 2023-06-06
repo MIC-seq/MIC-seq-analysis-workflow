@@ -1,11 +1,12 @@
 #!/usr/bin/bash
 
 
-sample=A197
+sample={sample_name}
 ref_dir={uhgg_datasets/gpd_datasets file folder path}
 sortmerna_idxpath={sortmerna index file folder path}
 
 ###Data filters
+#10000 microbes for example
 zcat ${sample}_1.fq.gz |grep -e "^[ATCG]" |cut -c-20|sort|uniq -c|sort -k1 -nr|awk -v OFS="\t" '{print $2,$1}'|head -10000 > whitelist.txt
 
 umi_tools extract --extract-method=regex --bc-pattern="(?P<cell_1>.{20})(?P<umi_1>.{8}).*" --stdin ${sample}_1.fq --stdout ${sample}_R1_extracted.fq.gz --read2-in ${sample}_2.fq --read2-out=${sample}_R2_extracted.fq.gz --whitelist whitelist.txt --filter-cell-barcode --error-correct-cell
