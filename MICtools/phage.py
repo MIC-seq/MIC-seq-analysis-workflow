@@ -17,12 +17,13 @@ Method:
 
     Construction of microbial transcriptional activity matrix:
 
-        MICtools phage --sample [sample_file] --rna_ref [ref_folder] --phage_ref [ref_folder] --feature_type [gene/exon/transcript...] --prefix [prefix]
+        MICtools phage --sample [sample_file] --rrna_ref [ref_folder] --phage_ref [ref_folder] --feature_type [gene/exon/transcript...] --prefix [prefix]
 
     Note: Sample file is the R2 end file of fastq which contain extracted barcode and UMI information adding to the 
-    read name. And it is recommended to contain only reference genome fasta and gtf file in ref_folder. The feature type 
-    is the major gene information while presentation format differs in different gtf files in column #3.Some files are genes 
-    and some are exon or transcript and so on.
+    read name. And the rrna reference folder is the datasets collected by sortmerna. Also, it is recommended to contain 
+    only reference genome fasta and gtf file in phage_ref folder. The feature type is the major gene information in 
+    column #3 of gtf file while presentation format differs in different gtf files.Some files are genes and some are 
+    exon or transcript and so on.
  
 '''
 
@@ -195,7 +196,7 @@ def main(argv):
     command6 = 'samtools index {}_assigned_sorted.bam'.format(prefix)
 
     command7 = 'umi_tools count --per-gene --gene-tag=XT --assigned-status-tag=XS --per-cell '\
-    '--wide-format-cell-counts -I {}_assigned_sorted.bam -S {}_cell_matrix.txt'.format(prefix,prefix)
+    '--wide-format-cell-counts -I {}_assigned_sorted.bam -S {}_host_phage_matrix.txt'.format(prefix,prefix)
 
     c2 = sp.run(command2, shell=True)
     c3 = sp.run(command3, shell=True)

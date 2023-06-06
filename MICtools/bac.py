@@ -151,7 +151,7 @@ def main(argv):
     command4 = 'samtools index {}_assigned_sorted.bam'.format(prefix)
 
     command5 = 'umi_tools count --per-gene --gene-tag=XT --assigned-status-tag=XS --per-cell '\
-    '--wide-format-cell-counts -I {}_assigned_sorted.bam -S {}_cell_matrix.txt'.format(prefix,prefix)
+    '--wide-format-cell-counts -I {}_assigned_sorted.bam -S {}_microbe_matrix.txt'.format(prefix,prefix)
 
     c1 = sp.run(command1, shell=True)
     c2 = sp.run(command2, shell=True)
