@@ -32,6 +32,7 @@ install_requires = [
     "matplotlib>=3.5",
     "palettable>=3.3.3"]
 
+
 setuptools.setup(
     name="MICtools",
     version="1.0.0",
