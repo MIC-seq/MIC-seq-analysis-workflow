@@ -105,13 +105,13 @@ Species info of each microbe
 
 Pieplot of sample genus composition
 
-![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_genus.pdf)
+![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_genus.png)
 
 - {prefix}_species.pdf
 
 Pieplot of sample specie composition
 
-![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_species.pdf)
+![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_species.png)
 
 
 ---
