@@ -93,25 +93,25 @@ GCTCTCTCCACCTAGGCAAC	65236	64703	1408	0.9876	g_Megamonas	3246	0.9625	s_Megamonas
 CGCCTGAGCTGACTGGCTGC	61925	61164	1408	1.0000	g_Megamonas	3246	0.9745	s_Megamonas funiformis
 ```
 
-- ${prefix}.genus_info.txt
+- {prefix}.genus_info.txt
 
 Genus info of each microbe
 
-- ${prefix}.species_info.txt
+- {prefix}.species_info.txt
 
 Species info of each microbe
 
-- ${prefix}_genus.pdf
+- {prefix}_genus.pdf
 
 Pieplot of sample genus composition
 
-![](fig_path)
+![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_genus.pdf)
 
-- ${prefix}_species.pdf
+- {prefix}_species.pdf
 
 Pieplot of sample specie composition
 
-![](fig_path)
+![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_species.pdf)
 
 
 ---
