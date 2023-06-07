@@ -85,7 +85,7 @@ MICtools anno --module pipeline -s /path/${sample}_R2_extracted.fq.gz -r [kraken
 
 - ${prefix}.barcode_count.txt
 
-Main single microbe taxonomic annotation result and the meanings of each column are:
+Main single microbe taxonomic annotation result and the meanings of each column:
 
 ```txt
 #barcode	#reads_count	#classified_reads	#genus_id	#genus_purity	#genus_name	#species_id	#species_purity	#species_name
