@@ -85,7 +85,7 @@ MICtools anno --module pipeline -s /path/${sample}_R2_extracted.fq.gz -r [kraken
 
 - ${prefix}.barcode_count.txt
 
-Main single microbe taxonomic annotation result and the meanings of each column:
+	Main single microbe taxonomic annotation result and the meanings of each column:
 
 ```txt
 #barcode	#reads_count	#classified_reads	#genus_id	#genus_purity	#genus_name	#species_id	#species_purity	#species_name
@@ -95,21 +95,21 @@ CGCCTGAGCTGACTGGCTGC	61925	61164	1408	1.0000	g_Megamonas	3246	0.9745	s_Megamonas
 
 - {prefix}.genus_info.txt
 
-Genus info of each microbe
+	Genus info of each microbe
 
 - {prefix}.species_info.txt
 
-Species info of each microbe
+	Species info of each microbe
 
 - {prefix}_genus.pdf
 
-Pieplot of sample genus composition
+	Pieplot of sample genus composition
 
 ![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_genus.png)
 
 - {prefix}_species.pdf
 
-Pieplot of sample specie composition
+	Pieplot of sample specie composition
 
 ![](https://github.com/MIC-seq/MIC-seq-analysis-workflow/blob/main/fig/test_species.png)
 
